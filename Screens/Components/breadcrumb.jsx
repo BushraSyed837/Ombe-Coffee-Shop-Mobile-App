@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import { Button, } from 'react-native-paper';
 const Breadcrumb = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
@@ -20,20 +20,29 @@ const Breadcrumb = ({ navigation }) => {
           accessibilityLabel="Go back">
           <Icon name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
-        <Text style={[styles.headerText, styles.boldText]}>Breadcrumb</Text>
+        <Text style={{fontSize: 18, color: '#000', fontFamily: 'Poppins-Bold'}}>
+        Breadcrumbs
+        </Text>
         <TouchableOpacity
           style={styles.menuButton}
           onPress={() => console.log('Menu button pressed')}>
           {/* Placeholder for future menu button functionality */}
         </TouchableOpacity>
       </View>
-
-      <View style={styles.titleContainer}>
-        <Text style={[styles.title, styles.boldText]}>Bootstrap Elements</Text>
-        <Text style={[styles.subtitle, styles.regularText]}>Breadcrumb style</Text>
+      <View style={styles.header}>
+        <View style={styles.headerContent}>
+          <Icon name="layers" size={28} color="#fff" style={{marginTop: 10, marginRight:10}} />
+          <Text style={styles.headerText}>Bootstrap Elements</Text>
+        </View>
+        <Button
+          mode="outlined"
+          style={styles.headerButton}
+          labelStyle={styles.headerButtonText}>
+          Breadcrumbs Style
+        </Button>
       </View>
-
-      {/* Breadcrumb Sections */}
+      
+      <View style={{margin:15}}>
       <Text style={styles.sectionTitle}>Breadcrumb</Text>
       <Text style={styles.breadcrumb}>Home › Elements › Breadcrumb</Text>
 
@@ -51,6 +60,9 @@ const Breadcrumb = ({ navigation }) => {
         <Text style={styles.styleThreeText}>Breadcrumb</Text>
       </View>
 
+      </View>
+
+<View style={{margin:15}}>
       {/* Breadcrumb Colors */}
       <Text style={styles.sectionTitle}>Breadcrumb Color</Text>
       {["#2ECC71", "#F5CBA7", "#C0392B", "#3498DB", "#E67E22", "#000000"].map(
@@ -67,6 +79,7 @@ const Breadcrumb = ({ navigation }) => {
           </View>
         )
       )}
+      </View>
     </ScrollView>
   );
 };
@@ -75,14 +88,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F5F5F5",
-    paddingHorizontal: 16,
-    paddingTop: 24,
   },
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    
+    paddingHorizontal: 16,
     paddingVertical: 8,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
@@ -94,10 +105,35 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 18,
     color: '#000',
-    fontFamily: 'Poppins-Bold', // Added Poppins Regular font
+    fontFamily: 'Poppins-Bold', // Using Poppins-Bold
   },
   menuButton: {
     padding: 8,
+  },
+  header: {
+    backgroundColor: '#6a11cb',
+    borderRadius: 8,
+    margin: 15,
+    padding: 10,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    marginBottom: 5,
+  },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 0,
+  },
+  headerButton: {
+    borderColor: '#fff',
+    borderRadius: 6,
+    width: 180,
+    marginLeft: 40,
+  },
+  headerButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontFamily: 'Poppins-Regular', // Using Poppins-Regular
   },
   titleContainer: {
     alignItems: 'flex-start',
