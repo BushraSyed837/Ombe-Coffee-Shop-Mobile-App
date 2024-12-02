@@ -252,8 +252,7 @@ const InputsScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
+    backgroundColor: '#f8f9fa',
   },
   headerContainer: {
     flexDirection: 'row',
@@ -271,22 +270,22 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 18,
     color: '#000',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Bold', // Using Poppins-Bold
   },
   menuButton: {
     padding: 8,
   },
   header: {
     backgroundColor: '#6a11cb',
-    padding: 16,
     borderRadius: 8,
+    margin: 15,
+    padding: 10,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    marginBottom: 20,
+    marginBottom: 5,
   },
   headerContent: {
     flexDirection: 'row',
-    fontFamily: 'Poppins-Bold',
     alignItems: 'center',
     marginLeft: 0,
   },
@@ -299,23 +298,23 @@ const styles = StyleSheet.create({
   headerButtonText: {
     color: '#fff',
     fontSize: 12,
-
+    fontFamily: 'Poppins-Regular', // Using Poppins-Regular
   },
   section: {
+    margin:15,
     marginBottom: 20,
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius:8,
-    padding:15
   },
   sectionTitle: {
     fontSize: 18,
+    padding:15,
     fontWeight: '600',
     marginBottom: 10,
     borderBottomWidth: 1,
     borderColor: '#ddd',
     paddingBottom:10,
-    paddingHorizontal:-30
   },
  separator: {
     fontSize: 18,
@@ -328,9 +327,10 @@ const styles = StyleSheet.create({
   },
   inputWrapper: {
     borderWidth: 1,
+    
     borderColor: '#ddd',
     borderRadius: 5,
-    marginBottom: 10,
+    margin:10,
     padding: 5,
   },
   inputContainer: {
@@ -341,6 +341,10 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     color: '#000',
+  },
+  borderInputWrapper:{
+    marginLeft:15,
+    marginRight:15
   },
   inputWithIcon: {
     flex: 1,
@@ -407,7 +411,7 @@ const styles = StyleSheet.create({
   sliderLabels: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 10,
+    margin: 10,
   },
   sliderLabel: {
     fontSize: 14,

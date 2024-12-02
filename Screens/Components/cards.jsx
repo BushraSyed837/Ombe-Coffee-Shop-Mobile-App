@@ -167,9 +167,8 @@ const CardUI = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f8f9fa',
+  container:{
+    flex:1
   },
   headerContainer: {
     flexDirection: 'row',
@@ -187,22 +186,22 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 18,
     color: '#000',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Bold', // Using Poppins-Bold
   },
   menuButton: {
     padding: 8,
   },
   header: {
     backgroundColor: '#6a11cb',
-    padding: 16,
     borderRadius: 8,
+    margin: 15,
+    padding: 10,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    marginBottom: 20,
+    marginBottom: 5,
   },
   headerContent: {
     flexDirection: 'row',
-    fontFamily: 'Poppins-Bold',
     alignItems: 'center',
     marginLeft: 0,
   },
@@ -214,18 +213,8 @@ const styles = StyleSheet.create({
   },
   headerButtonText: {
     color: '#fff',
-    fontFamily: 'Poppins-Regular',
     fontSize: 12,
-  },
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    
-    shadowRadius: 5,
-    shadowOffset: {width: 0, height: 2},
-    elevation: 3,
+    fontFamily: 'Poppins-Regular', // Using Poppins-Regular
   },
   cardImage: {
     width: '100%',
@@ -267,16 +256,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     padding: 15,
-    marginBottom: 20,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    shadowOffset: {width: 0, height: 2},
-    elevation: 3,
+    elevation: 2,
     borderWidth: 1,
     borderColor: '#e0e0e0',
+    margin:10
   },
-  featuredCard: {backgroundColor: '#fff', borderWidth: 0},
+  featuredCard: {backgroundColor: '#fff', borderWidth: 0, marginBottom:20},
   cardTitle: {
     fontSize: 16,
     fontFamily: 'Poppins-Bold',

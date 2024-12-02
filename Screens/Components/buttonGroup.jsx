@@ -77,6 +77,7 @@ const ButtonsGroup = ({navigation}) => {
       {/* Buttons Section with Border */}
       <View style={styles.sectionBorder}>
         <Text style={styles.sectionTitle}>Button Group</Text>
+        <View style={styles.line}></View>
         <View style={[styles.buttonRow]}>
           <View style={{flexDirection: 'row',borderRadius:10, marginBottom:15,  backgroundColor: '#035e3e' }}>
           {['Left', 'Middle', 'Right'].map((label, index) => (
@@ -101,6 +102,7 @@ const ButtonsGroup = ({navigation}) => {
       </View>
       <View style={styles.sectionBorder}>
         <Text style={styles.sectionTitle}>Button Group Sizes</Text>
+        <View style={styles.line}></View>
         <View style={styles.buttonRow}>
         <View style={{flexDirection: 'row',borderRadius:10, marginBottom:15,  backgroundColor: '#035e3e' }}>
           {['Left', 'Middle', 'Right'].map((label, index) => (
@@ -164,6 +166,7 @@ const ButtonsGroup = ({navigation}) => {
       {/* Button Nesting Section */}
       <View style={styles.sectionBorder}>
           <Text style={styles.sectionTitle}>Button Nesting</Text>
+          <View style={styles.line}></View>
           <View style={[styles.buttonRow, {borderRadius:10,  backgroundColor: '#035e3e',}]}>
             <Button mode="contained" style={[styles.button,{paddingHorizontal:3}]}>1</Button>
             <Button mode="contained" style={[styles.button,{paddingHorizontal:3}]}>2</Button>
@@ -187,7 +190,8 @@ const ButtonsGroup = ({navigation}) => {
         {/* Vertical Dropdown Section */}
         <View style={styles.sectionBorder}>
           <Text style={styles.sectionTitle}>Vertical Dropdown Variation</Text>
-          <View style={[styles.buttonColumn, {borderRadius:10, paddingHorizontal:5,paddingVertical:5, width:'50%',  backgroundColor: '#035e3e',}]}>
+          <View style={styles.line}></View>
+          <View style={[styles.buttonColumn, {borderRadius:10, marginLeft:15, marginBottom:15, paddingVertical:5, width:'50%',  backgroundColor: '#035e3e',}]}>
             <Button mode="contained" style={styles.columnButton}>Button</Button>
             <Button mode="contained" style={styles.columnButton}>Button</Button>
             <Menu
@@ -215,7 +219,6 @@ const ButtonsGroup = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
     backgroundColor: '#f5f5f5',
     borderWidth: 2,
     borderColor: '#ccc',
@@ -237,22 +240,22 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 18,
     color: '#000',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Bold', // Using Poppins-Bold
   },
   menuButton: {
     padding: 8,
   },
   header: {
     backgroundColor: '#6a11cb',
-    padding: 16,
     borderRadius: 8,
+    margin: 15,
+    padding: 10,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    marginBottom: 20,
+    marginBottom: 5,
   },
   headerContent: {
     flexDirection: 'row',
-    fontFamily: 'Poppins-Bold',
     alignItems: 'center',
     marginLeft: 0,
   },
@@ -265,12 +268,12 @@ const styles = StyleSheet.create({
   headerButtonText: {
     color: '#fff',
     fontSize: 12,
-
+    fontFamily: 'Poppins-Regular', // Using Poppins-Regular
   },
   sectionTitle: {
+    padding:16,
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 12,
     fontFamily: 'Poppins-Bold',
     color: '#333',
   },
@@ -279,22 +282,18 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
     marginBottom: 20,
-    borderTopWidth: 1,
-    borderColor: '#ddd',
-    padding: 5,
     marginHorizontal: 12,
     backgroundColor: '#fff',
     borderRadius: 15,
     alignItems: 'center',
   },
   sectionBorder: {
+    margin:15,
     marginBottom: 15,
     backgroundColor: '#fff',
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 8,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
   },
   button: {
     backgroundColor: '#035e3e',
@@ -367,6 +366,11 @@ const styles = StyleSheet.create({
   verticalButtonWrapper: {
     marginBottom: 10,
   },
+  line: {
+    borderTopWidth: 1,
+    borderColor: '#ddd',
+    marginBottom: 10,
+  }, 
 });
 
 export default ButtonsGroup;

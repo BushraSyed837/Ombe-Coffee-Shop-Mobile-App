@@ -413,11 +413,6 @@ const DropdownUI = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    backgroundColor: '#F5F5F5',
-    flexGrow: 1,
-  },
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -434,22 +429,22 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 18,
     color: '#000',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Bold', // Using Poppins-Bold
   },
   menuButton: {
     padding: 8,
   },
   header: {
     backgroundColor: '#6a11cb',
-    padding: 16,
     borderRadius: 8,
+    margin: 15,
+    padding: 10,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    marginBottom: 20,
+    marginBottom: 5,
   },
   headerContent: {
     flexDirection: 'row',
-    fontFamily: 'Poppins-Bold',
     alignItems: 'center',
     marginLeft: 0,
   },
@@ -462,14 +457,14 @@ const styles = StyleSheet.create({
   headerButtonText: {
     color: '#fff',
     fontSize: 12,
+    fontFamily: 'Poppins-Regular', // Using Poppins-Regular
   },
   section: {
     borderWidth: 1,
     borderColor: '#ddd',
-
     backgroundColor: '#FFF',
     borderRadius: 8,
-    marginBottom: 20,
+    margin:15,
   },
   title: {
     fontSize: 18,
