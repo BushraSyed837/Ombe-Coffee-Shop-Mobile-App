@@ -47,13 +47,13 @@ const componentsData = [
   },
 ];
 
-const ComponentsScreen = () => {
+const PagesScreen = () => {
   const navigation = useNavigation();
 
   const renderComponent = ({item}) => (
     <TouchableOpacity
       style={styles.componentItem}
-      onPress={() => navigation.navigate(item.name)} // Navigate to the respective screen
+      onPress={() => navigation.navigate(item.name)}
     >
       <View style={styles.iconContainer}>
         <Feather
@@ -64,7 +64,7 @@ const ComponentsScreen = () => {
         />
       </View>
       <Text style={styles.componentName}>{item.name}</Text>
-      <Icon name="chevron-right" size={20} color="#000" onPress={()=>{navigation.goBack()}}/>
+      <Icon name="chevron-right" size={20} color="#000" />
     </TouchableOpacity>
   );
 
@@ -85,7 +85,7 @@ const ComponentsScreen = () => {
         <TouchableOpacity>
           <Feather name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Components</Text>
+        <Text style={styles.headerTitle}>Pages</Text>
         <TouchableOpacity></TouchableOpacity>
       </View>
 
@@ -149,4 +149,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ComponentsScreen;
+export default PagesScreen;
