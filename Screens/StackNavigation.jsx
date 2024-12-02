@@ -52,6 +52,18 @@ import Toasts from './Components/toasts';
 import Typography from './Components/typography';
 import LightGallery from './Components/lightGallery';
 import Progress from './Components/progress';
+import PagesScreen from './Pages/pages';
+import Cart from './cart';
+import SignUp from './Pages/signUp';
+import SignIn from './Pages/signIn';
+import WishlistScreen from './favorite';
+import ForgotPassword from './Pages/forgotPassword';
+import NewPasswordScreen from './Pages/newPassword';
+import OPTScreen from './Pages/otp';
+import NotificationScreen from './Pages/notification';
+import ErrorScreen from './Pages/error404';
+import FAQScreen from './Pages/faq';
+import Onboarding from './Pages/onboarding';
 
 const Stack = createStackNavigator();
 
@@ -84,6 +96,8 @@ const HeaderRightIcons = ({handleDrawerOpen}) => (
 const screens = [
   {name: 'Home', component: HomeMain},
   {name: 'Products', component: ProductsScreen},
+  {name: 'Cart', component: Cart},
+  {name: 'favourite', component: WishlistScreen},
   {name: 'details', component: DetailsScreen},
   {name: 'My Order', component: MyOrders},
   {name: 'search', component: SearchHistoryScreen},
@@ -97,10 +111,21 @@ const screens = [
   {name: 'creditcardform', component: CreditCardForm},
   {name: 'deliveryAddressScreen', component: DeliveryAddressScreen},
   {name: 'review', component: Reviews},
+  {name: 'signIn', component: SignIn},
+  {name: 'signUp', component: SignUp},
+  {name: 'forgotPassword', component: ForgotPassword},
+  {name: 'OPT', component: OPTScreen},
+  {name: 'newPassword', component: NewPasswordScreen},
+  {name: 'notification', component: NotificationScreen},
+  {name: 'error', component: ErrorScreen},
+  {name: 'faq', component: FAQScreen},
+  {name: 'onboarding', component: Onboarding},
+  // {name: 'logout', component: Logout},
+
   {name: 'Chat List', component: MessageList},
   {name: 'chat', component: ChatScreen},
+  {name: 'Pages', component: PagesScreen},
   {name: 'Components', component: ComponentsScreen},
-
   {name: 'Header Style', component: HeaderScreen},
   {name: 'Accordion', component: Accordion},
   {name: 'Alerts', component: Alerts},

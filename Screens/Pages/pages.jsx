@@ -6,43 +6,34 @@ import {useNavigation} from '@react-navigation/native';
 
 const componentsData = [
   {
-    category: 'User Components',
     components: [
-      {name: 'Header Style', icon: 'layout', screen: 'HeaderScreen'},
-    ],
-  },
-  {
-    category: 'Bootstrap Components',
-    components: [
-      {name: 'Accordion', icon: 'bold', screen: 'Accordion'},
-      {name: 'Alerts', icon: 'bold', screen: 'Alerts'},
-      {name: 'Avatar', icon: 'bold', screen: 'Avatar'},
-      {name: 'Badges', icon: 'bold', screen: 'Badges'},
-      {name: 'Breadcrumb', icon: 'bold', screen: 'Breadcrumb'},
-      {name: 'Buttons', icon: 'bold', screen: 'Buttons'},
-      {name: 'Button Group', icon: 'bold', screen: 'ButtonGroup'},
-      {name: 'Cards', icon: 'bold', screen: 'Cards'},
-      {name: 'Inputs', icon: 'bold', screen: 'Inputs'},
-      {name: 'Dropdowns', icon: 'bold', screen: 'Dropdowns'},
-      {name: 'Collapse', icon: 'bold', screen: 'Collapse'},
-      {name: 'Radio Button', icon: 'bold', screen: 'RadioButton'},
-      {name: 'Timeline', icon: 'bold', screen: 'Timeline'},
-      {name: 'Social', icon: 'bold', screen: 'Social'},
-      {name: 'List Group', icon: 'bold', screen: 'ListGroup'},
-      {name: 'Modal', icon: 'bold', screen: 'Modal'},
-      {name: 'Tabs', icon: 'bold', screen: 'Tabs'},
-      {name: 'Switch', icon: 'bold', screen: 'Switch'},
-      {name: 'Divider', icon: 'bold', screen: 'Divider'},
-      {name: 'Stepper', icon: 'bold', screen: 'Stepper'},
-      {name: 'Offcanvas', icon: 'bold', screen: 'Offcanvas'},
-      {name: 'Pagination', icon: 'bold', screen: 'Pagination'},
-      {name: 'Placeholders', icon: 'bold', screen: 'Placeholders'},
-      {name: 'Progress', icon: 'bold', screen: 'Progress'},
-      {name: 'Scrollspy', icon: 'bold', screen: 'Scrollspy'},
-      {name: 'Spinners', icon: 'bold', screen: 'Spinners'},
-      {name: 'Toasts', icon: 'bold', screen: 'Toasts'},
-      {name: 'Typography', icon: 'bold', screen: 'Typography'},
-      {name: 'Lightgallery', icon: 'bold', screen: 'Lightgallery'},
+      {name: 'Onboarding', icon: 'bold', screen: 'onboarding'},
+      {name: 'Sign In', icon: 'bold', screen: 'signIn'},
+      {name: 'Sign Up', icon: 'bold', screen: 'signUp'},
+      {name: 'Forgot Password', icon: 'bold', screen: 'forgotPassword'},
+      {name: 'Enter Code OPT', icon: 'bold', screen: 'OPT'},
+      {name: 'Enter New Password', icon: 'bold', screen: 'newPassword'},
+      {name: 'Home', icon: 'bold', screen: 'Home'},
+      {name: 'Products', icon: 'bold', screen: 'Products'},
+      {name: 'Product Detail', icon: 'bold', screen: 'details'},
+      {name: 'Search', icon: 'bold', screen: 'search'},
+      {name: 'Cart', icon: 'bold', screen: 'Cart'},
+      {name: 'Add Card', icon: 'bold', screen: 'creditcardform'},
+      {name: 'Add Delivery Address', icon: 'bold', screen: 'address'},
+      {name: 'Chat List', icon: 'bold', screen: 'Chat List'},
+      {name: 'Checkout', icon: 'bold', screen: 'checkout'},
+      {name: 'Delivery Address', icon: 'bold', screen: 'deliveryAddressScreen'},
+      {name: 'Profile', icon: 'bold', screen: 'Profile'},
+      {name: 'Edit Profile', icon: 'bold', screen: 'editProfile'},
+      {name: 'FAQ', icon: 'bold', screen: 'faq'},
+      {name: 'My Order', icon: 'bold', screen: 'My Order'},
+      {name: 'Notification', icon: 'bold', screen: 'notification'},
+      {name: 'Wishlist', icon: 'bold', screen: 'favourite'},
+      {name: 'Review', icon: 'bold', screen: 'review'},
+      {name: 'Reward', icon: 'bold', screen: 'reward'},
+      {name: 'Track Order', icon: 'bold', screen: 'trackOrder'},
+      {name: 'Payment', icon: 'bold', screen: 'Transactions'},
+      {name: 'Error-404', icon: 'bold', screen: 'error'},
     ],
   },
 ];
@@ -53,8 +44,7 @@ const PagesScreen = () => {
   const renderComponent = ({item}) => (
     <TouchableOpacity
       style={styles.componentItem}
-      onPress={() => navigation.navigate(item.name)}
-    >
+      onPress={() => navigation.navigate(item.screen)}>
       <View style={styles.iconContainer}>
         <Feather
           name={item.icon}
@@ -68,13 +58,13 @@ const PagesScreen = () => {
     </TouchableOpacity>
   );
 
-  const renderCategory = ({item}) => (
-    <View>
-      <Text style={styles.categoryName}>{item.category}</Text>
+  const renderCategory = ({item, index}) => (
+    <View key={`category-${index}`}>
+      {/* If you add a category name later, you can show it here */}
       <FlatList
         data={item.components}
         renderItem={renderComponent}
-        keyExtractor={component => component.name}
+        keyExtractor={component => component.name} // Unique key for inner components
       />
     </View>
   );
@@ -92,7 +82,7 @@ const PagesScreen = () => {
       <FlatList
         data={componentsData}
         renderItem={renderCategory}
-        keyExtractor={item => item.category}
+        keyExtractor={(item, index) => `components-${index}`} // Unique key for outer FlatList
       />
     </View>
   );
@@ -113,16 +103,8 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    fontFamily: 'Poppins-Bold', // Apply Poppins-Bold here
+    fontFamily: 'Poppins-Bold',
     color: '#000',
-  },
-  categoryName: {
-    marginHorizontal: 16,
-    marginTop: 20,
-    marginBottom: 8,
-    fontSize: 16,
-    fontFamily: 'Poppins-Bold', // Apply Poppins-Bold here
-    color: '#333',
   },
   componentItem: {
     flexDirection: 'row',
@@ -144,7 +126,7 @@ const styles = StyleSheet.create({
   componentName: {
     flex: 1,
     fontSize: 16,
-    fontFamily: 'Poppins-Regular', // Apply Poppins-Regular here
+    fontFamily: 'Poppins-Regular',
     color: '#000',
   },
 });
