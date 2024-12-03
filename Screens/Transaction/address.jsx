@@ -15,13 +15,17 @@ const Address = () => {
     <ScrollView style={styles.container}>
       {/* Header Section */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-back" size={24} color="#000" />
+        <TouchableOpacity>
+          <Icon name="arrow-back" size={24} color="#333" onPress={()=>{navigation.goBack()}}/>
         </TouchableOpacity>
-        <Text style={styles.title}>Add Address</Text>
+        <Text style={styles.title}>Add Delivery Address</Text>
+        <TouchableOpacity>
+        </TouchableOpacity>
       </View>
 
       {/* Contact Details Section */}
+      <View style={{
+    padding: 20,}}>
       <Text style={styles.sectionTitle}>Contact Details</Text>
       {['Full Name', 'Mobile No.'].map((placeholder, index) => (
         <TextInput
@@ -71,6 +75,7 @@ const Address = () => {
       <TouchableOpacity style={styles.saveButton}>
         <Text style={styles.saveButtonText}>SAVE ADDRESS</Text>
       </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 };
@@ -79,19 +84,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f9f9f9',
-    padding: 20,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    justifyContent: 'space-between',
+    padding: 16,
+    backgroundColor: '#fff',
   },
-  title: {
-    fontSize: 18,
-    marginLeft: 10,
-    color:'#000',
-    fontFamily: 'Poppins-Bold', // Added Poppins font family
-  },
+  title: {fontSize: 18, fontFamily: 'Poppins-Bold', color: '#333'},
   sectionTitle: {
     fontSize: 16,
     color:'#000',

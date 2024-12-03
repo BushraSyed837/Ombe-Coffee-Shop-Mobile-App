@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -23,6 +23,8 @@ const Tab = createBottomTabNavigator();
 function ScreenWithDrawer() {
   const animationValue = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
+  const [activeMenu, setActiveMenu] = useState('Home'); // State to track active menu
+
   const handleDrawerOpen = () => {
     Animated.timing(animationValue, {
       toValue: 1,
@@ -37,6 +39,12 @@ function ScreenWithDrawer() {
       duration: 300,
       useNativeDriver: true,
     }).start();
+  };
+
+  const handleMenuPress = menuName => {
+    setActiveMenu(menuName); // Update active menu state
+    navigation.navigate('Home', {screen: menuName}); // Navigate to the selected menu
+    handleDrawerClose(); // Close the drawer
   };
 
   const screenStyle = {
@@ -80,13 +88,22 @@ function ScreenWithDrawer() {
           <TouchableOpacity
             key={index}
             style={styles.menuItem}
-            onPress={() => {
-              navigation.navigate('Home', {screen: item.name}); // Navigate to nested screens
-              handleDrawerClose();
-              // Optionally close the drawer after navigation
-            }}>
-            <Icon name={item.icon} size={24} color="#34A853" />
-            <Text style={styles.menuLabel}>{item.name}</Text>
+            onPress={() => handleMenuPress(item.name)}>
+            <Icon
+              name={item.icon}
+              size={24}
+              color={activeMenu === item.name ? '#34A853' : '#dee2e6'}
+            />
+            <Text
+              style={[
+                styles.menuLabel,
+                {
+                  color: activeMenu === item.name ? '#34A853' : '#B0B0B0',
+                  fontWeight: activeMenu === item.name ? '600' : '400',
+                },
+              ]}>
+              {item.name}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -102,9 +119,9 @@ const menuItems = [
   {name: 'Home', icon: 'home'},
   {name: 'My Order', icon: 'shopping-bag'},
   {name: 'Transactions', icon: 'receipt'},
-  {name: 'Pages', icon: 'pages'},
-  {name: 'Components', icon: 'pages'},
-  {name: 'Products', icon: 'widgets'},
+  {name: 'Pages', icon: 'layers'},
+  {name: 'Components', icon: 'widgets'},
+  {name: 'Products', icon: 'category'},
   {name: 'Chat List', icon: 'chat'},
   {name: 'Profile', icon: 'person'},
   {name: 'Logout', icon: 'logout'},
@@ -165,30 +182,34 @@ export default function TabScreen() {
         component={WishlistScreen}
         options={({navigation}) => ({
           headerTitle: () => (
-            <View style={styles.headerFav}>
-              <Text style={styles.headerTitleFav}>Wishlist</Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  width: '100%',
-                  justifyContent: 'space-between',
-                }}>
+            <View
+              style={{
+                marginTop: 25,
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: '100%',
+                justifyContent: 'space-between',
+              }}>
+              <View>
+                <Text style={styles.titleCart}>Wishlist</Text>
                 <View style={{flexDirection: 'row'}}>
                   <Text style={styles.totalFavBold}>6</Text>
                   <Text style={styles.totalFav}> Items • Total: $213</Text>
                 </View>
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate('Home', {screen: 'search'});
-                  }}>
-                  <Icon
-                    name="search"
-                    size={24}
-                    color="#000"
-                    style={styles.searchIcon}
-                  />
-                </TouchableOpacity>
               </View>
+
+              <TouchableOpacity
+                style={{marginBottom: 10}}
+                onPress={() => {
+                  navigation.navigate('Home', {screen: 'search'});
+                }}>
+                <Icon
+                  name="search"
+                  size={24}
+                  color="#000"
+                  style={styles.searchIcon}
+                />
+              </TouchableOpacity>
             </View>
           ),
         })}
@@ -200,7 +221,7 @@ export default function TabScreen() {
           headerTitle: () => (
             <View
               style={{
-                marginTop: 15,
+                marginTop: 25,
                 flexDirection: 'row',
                 alignItems: 'center',
                 width: '100%',
@@ -276,7 +297,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
   },
-  profileHeaderText: {fontSize: 20, fontWeight: 'bold', color: '#333'},
+  profileHeaderText: {fontSize: 20, color: '#000', fontFamily: 'Poppins-Bold'},
   profileSection: {
     alignItems: 'center',
     marginBottom: 20,
@@ -295,7 +316,6 @@ const styles = StyleSheet.create({
   headerFav: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    marginBottom: 10,
   },
   changeAddressButton: {
     flexDirection: 'row',
@@ -306,6 +326,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 10,
     marginLeft: 10,
+    marginBottom: 15,
   },
   locationIcon: {
     marginRight: 5,
@@ -316,9 +337,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   titleCart: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 5,
+    fontSize: 20,
     color: '#000',
     fontFamily: 'Poppins-Bold', // Apply Bold version of Poppins here
   },
@@ -331,19 +350,18 @@ const styles = StyleSheet.create({
   headerTitleFav: {
     fontSize: 18,
     color: '#000',
-    fontWeight: 'bold',
-    fontFamily: 'Poppins-Regular', // Apply Poppins font here
+    fontFamily: 'Poppins-Bold', // Apply Poppins font here
   },
   totalFavBold: {
     fontSize: 14,
     color: '#000',
-    fontWeight: 'bold',
     fontFamily: 'Poppins-Bold', // Apply Bold version of Poppins here
   },
   totalFav: {
     fontSize: 14,
     color: '#000',
     fontFamily: 'Poppins-Regular', // Apply Poppins font here
+    marginBottom:15
   },
   iconContainer: {
     width: 40,
@@ -384,7 +402,8 @@ const styles = StyleSheet.create({
   },
   menuText: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'Poppins-Bold',
+    color: '#000',
     flex: 1,
     marginTop: 10,
     textAlign: 'left',
@@ -409,6 +428,8 @@ const styles = StyleSheet.create({
   menuLabel: {
     marginLeft: 16,
     fontSize: 16,
+    fontFamily: 'Poppins-Regular',
+    color: '#000',
   },
   mainScreen: {
     flex: 1,

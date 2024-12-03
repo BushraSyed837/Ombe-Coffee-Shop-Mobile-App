@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     paddingVertical: 15,
     alignItems: 'center',
-    marginTop: '50%',
+    marginTop: '40%',
   },
   proceedText: {
     color: '#fff',
@@ -233,3 +233,4 @@ const styles = StyleSheet.create({
 });
 
 export default Cart;
+

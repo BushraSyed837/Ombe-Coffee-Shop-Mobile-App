@@ -97,7 +97,6 @@ const CreditCardForm = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    padding: 20,
     backgroundColor: '#f0f0f0',
   },
   headerContainer: {
@@ -178,8 +177,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#04764E',
     padding: 16,
     borderRadius: 30,
+    margin:10,
     alignItems: 'center',
-    marginTop: '50%',
+    marginTop: '45%',
   },
   submitButtonText: {
     fontSize: 16,

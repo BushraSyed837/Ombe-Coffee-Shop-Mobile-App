@@ -64,6 +64,7 @@ import NotificationScreen from './Pages/notification';
 import ErrorScreen from './Pages/error404';
 import FAQScreen from './Pages/faq';
 import Onboarding from './Pages/onboarding';
+import {useNavigation} from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
@@ -74,9 +75,9 @@ const CustomHeader = () => (
   </View>
 );
 
-const HeaderRightIcons = ({handleDrawerOpen}) => (
+const HeaderRightIcons = ({handleDrawerOpen, navigation}) => (
   <View style={styles.headerRight}>
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate('notification')}>
       <Image
         source={require('../assets/shop.png')}
         style={styles.cartlogo}
@@ -158,46 +159,56 @@ const screens = [
   {name: 'Lightgallery', component: LightGallery},
 ];
 
-const StackNavigationScreen = ({handleDrawerOpen}) => {
-  return (
-    <Stack.Navigator
-      initialRouteName="home"
-      screenOptions={{
-        headerShown: true,
-        headerStyle: {
-          backgroundColor: '#fff',
-          shadowColor: 'transparent',
-          elevation: 0,
-        },
-      }}>
+const StackNavigationScreen = ({ handleDrawerOpen }) => (
+  <Stack.Navigator
+    initialRouteName="home"
+    screenOptions={{
+      headerShown: true,
+      headerStyle: {
+        backgroundColor: '#fff',
+        shadowColor: 'transparent',
+        elevation: 0,
+      },
+    }}
+  >
+    {/* Main Home Screen */}
+    <Stack.Screen
+      name="home"
+      component={HomeMain}
+      options={({ navigation }) => ({
+        headerTitle: CustomHeader,
+        headerRight: () => (
+          <HeaderRightIcons
+            handleDrawerOpen={handleDrawerOpen}
+            navigation={navigation}
+          />
+        ),
+      })}
+    />
+
+    {/* Dynamically Add All Other Screens */}
+    {screens.map(({ name, component, header }) => (
       <Stack.Screen
-        name="home"
-        component={HomeMain}
-        options={{
-          headerTitle: CustomHeader,
-          headerRight: () => (
-            <HeaderRightIcons handleDrawerOpen={handleDrawerOpen} />
-          ),
-        }}
+        key={name}
+        name={name}
+        component={component}
+        options={({ navigation }) =>
+          header
+            ? {
+                headerTitle: CustomHeader,
+                headerRight: () => (
+                  <HeaderRightIcons
+                    handleDrawerOpen={handleDrawerOpen}
+                    navigation={navigation}
+                  />
+                ),
+              }
+            : { headerShown: false }
+        }
       />
-      {screens.map(({name, component, header}) => (
-        <Stack.Screen
-          key={name}
-          name={name}
-          component={component}
-          options={
-            header
-              ? {
-                  headerTitle: CustomHeader,
-                  headerRight: HeaderRightIcons,
-                }
-              : {headerShown: false}
-          }
-        />
-      ))}
-    </Stack.Navigator>
-  );
-};
+    ))}
+  </Stack.Navigator>
+);
 
 export default StackNavigationScreen;
 
@@ -207,14 +218,15 @@ const styles = StyleSheet.create({
   },
   greeting: {
     fontSize: 14,
-    fontWeight: '400',
+    color:'#000',
     fontFamily: 'Poppins-Regular',
+    marginTop:15
   },
   title: {
     fontSize: 24,
-    fontWeight: '600',
     color: '#000',
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'Poppins-SemiBold',
+   
   },
   headerRight: {
     flexDirection: 'row',

@@ -73,7 +73,7 @@ const DeliveryAddressScreen = () => {
             size={24}
             color="#000"
             style={styles.backIcon}
-            onPress={() => navigation.navigate('Cart')}
+            onPress={() => navigation.goBack()}
           />
         </TouchableOpacity>
         <Text style={styles.header}>Delivery Address</Text>
@@ -108,7 +108,6 @@ const DeliveryAddressScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -140,6 +139,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f1f1',
     borderRadius: 8,
     marginBottom: 10,
+    
+    padding: 16,
   },
   iconContainer: {
     marginRight: 16,
@@ -192,6 +193,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
     marginTop: '10%',
+    margin:10
   },
   submitButtonText: {
     fontSize: 16,

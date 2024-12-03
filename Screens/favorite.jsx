@@ -76,10 +76,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,  // Increased font size for better readability
-    fontWeight: 'bold',
+    
     textAlign: 'left',
     marginBottom: 5,
-    fontFamily: 'Poppins-Regular',  // Using Poppins font
+    fontFamily: 'Poppins-Bold',  // Using Poppins font
     flexWrap: 'wrap',
   },
   variant: {
@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 14,
-    fontWeight: 'bold',
     color: '#000',
     fontFamily: 'Poppins-Bold',  // Bold Poppins font for price
   },

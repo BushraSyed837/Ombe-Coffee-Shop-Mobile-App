@@ -27,7 +27,7 @@ const CheckoutScreen = () => {
               padding: 4,
             }}
             onPress={() => {
-              navigation.navigate('Cart');
+              navigation.goBack();
             }}
           />
         </TouchableOpacity>
@@ -122,7 +122,6 @@ const CheckoutScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: '#f9f9f9',
   },
   headerContainer: {
@@ -147,6 +146,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 16,
+    padding: 16,
   },
   iconContainer: {
     marginRight: 16,
@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
   notesLabel: {
     fontSize: 16,
     marginVertical: 8,
+    padding: 16,
   },
   textInput: {
     height: 80,
@@ -181,10 +182,13 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     borderWidth: 1,
     borderColor: '#ddd',
+    marginLeft: 16,
+    marginRight: 16,
   },
   orderSummary: {
-    marginTop: '50%',
+    marginTop: '40%',
     paddingHorizontal: 8,
+    margin: 10,
   },
   orderRow: {
     flexDirection: 'row',
@@ -233,6 +237,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 30,
     alignItems: 'center',
+    margin:10
   },
   submitButtonText: {
     fontSize: 16,

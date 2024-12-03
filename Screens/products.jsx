@@ -151,9 +151,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 15,
+    padding: 16,
+    
   },
-  title: {fontSize: 18, fontWeight: 'bold', color: '#333'},
+  title: {fontSize: 18, fontFamily: 'Poppins-Bold', color: '#333'},
   searchBarContainer: {
     flexDirection: 'row',
     alignSelf: 'center',
@@ -194,11 +195,11 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     paddingHorizontal: 5,
   },
-  ratingText: {fontSize: 10, color: '#fff', fontWeight: 'bold'},
+  ratingText: {fontSize: 10, color: '#fff', fontFamily: 'Poppins-Bold',},
   productDetails: {flex: 1, marginLeft: 10},
-  productName: {fontSize: 14, fontWeight: 'bold', color: '#333'},
-  productCategory: {fontSize: 12, color: '#666'},
-  productPrice: {fontSize: 14, color: '#04764e', fontWeight: 'bold'},
+  productName: {fontSize: 14, fontFamily: 'Poppins-Bold', color: '#333'},
+  productCategory: {fontSize: 12, color: '#666', fontFamily: 'Poppins-Regular',},
+  productPrice: {fontSize: 14, color: '#04764e', fontFamily: 'Poppins-Bold',},
   buyButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -209,19 +210,19 @@ const styles = StyleSheet.create({
   buyButtonText: {
     fontSize: 14,
     color: '#04764e',
-    fontWeight: 'bold',
+    fontFamily: 'Poppins-Bold',
     marginLeft: 5,
   },
   tabBar: {
     flexDirection: 'row',
     backgroundColor: '#FFFFFF', // White background for the tab bar
     justifyContent: 'space-around',
-    paddingVertical: 10,
+    paddingVertical: 8,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
   },
   tabButton: {
-    paddingHorizontal: 20, // Add horizontal padding to the tab button for spacing
+    paddingHorizontal: 15, // Add horizontal padding to the tab button for spacing
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -229,11 +230,12 @@ const styles = StyleSheet.create({
     // Optional: You can add active tab background color change here
   },
   tabText: {
-    fontSize: 14,
+    fontSize: 15,
+    fontFamily: 'Poppins-Regular',
     color: '#04764e', // Green color for inactive tab text
   },
   activeTabText: {
     color: '#04764e', // White text color for active tab
-    fontWeight: 'bold',
+    fontFamily: 'Poppins-Bold',
   },
 });

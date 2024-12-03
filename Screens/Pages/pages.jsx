@@ -3,40 +3,43 @@ import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native';
+import Icons from 'react-native-vector-icons/MaterialIcons';
 
 const componentsData = [
   {
     components: [
-      {name: 'Onboarding', icon: 'bold', screen: 'onboarding'},
-      {name: 'Sign In', icon: 'bold', screen: 'signIn'},
-      {name: 'Sign Up', icon: 'bold', screen: 'signUp'},
-      {name: 'Forgot Password', icon: 'bold', screen: 'forgotPassword'},
-      {name: 'Enter Code OPT', icon: 'bold', screen: 'OPT'},
-      {name: 'Enter New Password', icon: 'bold', screen: 'newPassword'},
-      {name: 'Home', icon: 'bold', screen: 'Home'},
-      {name: 'Products', icon: 'bold', screen: 'Products'},
-      {name: 'Product Detail', icon: 'bold', screen: 'details'},
-      {name: 'Search', icon: 'bold', screen: 'search'},
-      {name: 'Cart', icon: 'bold', screen: 'Cart'},
-      {name: 'Add Card', icon: 'bold', screen: 'creditcardform'},
-      {name: 'Add Delivery Address', icon: 'bold', screen: 'address'},
-      {name: 'Chat List', icon: 'bold', screen: 'Chat List'},
-      {name: 'Checkout', icon: 'bold', screen: 'checkout'},
-      {name: 'Delivery Address', icon: 'bold', screen: 'deliveryAddressScreen'},
-      {name: 'Profile', icon: 'bold', screen: 'Profile'},
-      {name: 'Edit Profile', icon: 'bold', screen: 'editProfile'},
-      {name: 'FAQ', icon: 'bold', screen: 'faq'},
-      {name: 'My Order', icon: 'bold', screen: 'My Order'},
-      {name: 'Notification', icon: 'bold', screen: 'notification'},
-      {name: 'Wishlist', icon: 'bold', screen: 'favourite'},
-      {name: 'Review', icon: 'bold', screen: 'review'},
-      {name: 'Reward', icon: 'bold', screen: 'reward'},
-      {name: 'Track Order', icon: 'bold', screen: 'trackOrder'},
-      {name: 'Payment', icon: 'bold', screen: 'Transactions'},
-      {name: 'Error-404', icon: 'bold', screen: 'error'},
+      {name: 'Onboarding', icon: 'menu-book', screen: 'onboarding'},
+      {name: 'Sign In', icon: 'login', screen: 'signIn'},
+      {name: 'Sign Up', icon: 'person-add', screen: 'signUp'},
+      {name: 'Forgot Password', icon: 'lock', screen: 'forgotPassword'},
+      {name: 'Enter Code OPT', icon: 'key', screen: 'OPT'},
+      {name: 'Enter New Password', icon: 'vpn-key', screen: 'newPassword'},
+      {name: 'Home', icon: 'home', screen: 'Home'},
+      {name: 'Products', icon: 'shopping-cart', screen: 'Products'},
+      {name: 'Product Detail', icon: 'info', screen: 'details'},
+      {name: 'Search', icon: 'search', screen: 'search'},
+      {name: 'Cart', icon: 'shopping-bag', screen: 'Cart'},
+      {name: 'Add Card', icon: 'credit-card', screen: 'creditcardform'},
+      {name: 'Add Delivery Address', icon: 'location-on', screen: 'address'},
+      {name: 'Chat List', icon: 'forum', screen: 'Chat List'},
+      {name: 'Checkout', icon: 'payment', screen: 'checkout'},
+      {name: 'Delivery Address', icon: 'map', screen: 'deliveryAddressScreen'},
+      {name: 'Profile', icon: 'person', screen: 'Profile'},
+      {name: 'Edit Profile', icon: 'edit', screen: 'editProfile'},
+      {name: 'FAQ', icon: 'chat', screen: 'faq'},
+      {name: 'My Order', icon: 'receipt', screen: 'My Order'},
+      {name: 'Notification', icon: 'notifications', screen: 'notification'},
+      {name: 'Wishlist', icon: 'favorite', screen: 'favourite'},
+      {name: 'Review', icon: 'rate-review', screen: 'review'},
+      {name: 'Reward', icon: 'star', screen: 'reward'},
+      {name: 'Track Order', icon: 'local-shipping', screen: 'trackOrder'},
+      {name: 'Payment', icon: 'account-balance-wallet', screen: 'Transactions'},
+      {name: 'Error-404', icon: 'error', screen: 'error'},
     ],
   },
 ];
+
+
 
 const PagesScreen = () => {
   const navigation = useNavigation();
@@ -46,7 +49,7 @@ const PagesScreen = () => {
       style={styles.componentItem}
       onPress={() => navigation.navigate(item.screen)}>
       <View style={styles.iconContainer}>
-        <Feather
+        <Icons
           name={item.icon}
           size={24}
           color="#FFFFFF"

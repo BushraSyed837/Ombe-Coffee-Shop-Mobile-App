@@ -64,7 +64,7 @@ export default function MyOrders() {
           <TouchableOpacity
             style={styles.trackOrderButton}
             onPress={() => {
-              navigation.navigate('Home', { screen: 'trackOrder' });
+              navigation.navigate('trackOrder');
             }}
           >
             <Text style={styles.trackOrderText}>Track Order</Text>
@@ -73,7 +73,7 @@ export default function MyOrders() {
           <TouchableOpacity
             style={styles.writeReviewButton}
             onPress={() => {
-              navigation.navigate('Home', { screen: 'review' });
+              navigation.navigate('review');
             }}
           >
             <Text style={styles.writeReviewText}>Write Review</Text>
@@ -100,7 +100,7 @@ export default function MyOrders() {
               padding: 4,
             }}
             onPress={() => {
-              navigation.navigate("Cart");
+              navigation.goBack()
             }}
           />
         </TouchableOpacity>
