@@ -150,13 +150,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    paddingTop: 40,
+    paddingTop:20,
     paddingBottom: 0, 
-    marginBottom: -40, 
+    marginBottom: -60, 
   },
   carouselContainer: {
     width: '100%',
-    height:'100%',
+    height:'90%',
   },
   card: {
     backgroundColor: '#04764e',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,18 +7,25 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
-const CartItem = ({ item, increaseQuantity, decreaseQuantity, removeItem }) => (
+const CartItem = ({item, increaseQuantity, decreaseQuantity, removeItem}) => (
   <View style={styles.itemContainer}>
     <Image source={item.image} style={styles.itemImage} />
     <View style={styles.itemDetails}>
       <Text style={styles.itemName}>{item.name}</Text>
-      <Text style={styles.itemPrice}>
-        ${item.price}{' '}
-        <Text style={styles.originalPrice}>${item.originalPrice}</Text>
-        <Text style={styles.itemReviews}>{'   '}⭐ {item.reviews}</Text>
-      </Text>
+      <View style={styles.priceContainer}>
+        <Text style={styles.itemPrice}>
+          ${item.price}{' '}
+          <Text style={styles.originalPrice}>${item.originalPrice}</Text>
+        </Text>
+        <Text style={styles.itemReviews}>⭐ {item.reviews}</Text>
+        <TouchableOpacity
+          style={{marginLeft: 35}}
+          onPress={() => removeItem(item.id)}>
+          <Text style={styles.removeButton}>Remove</Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.quantityContainer}>
         <TouchableOpacity
           onPress={() => decreaseQuantity(item.id)}
@@ -33,9 +40,6 @@ const CartItem = ({ item, increaseQuantity, decreaseQuantity, removeItem }) => (
         </TouchableOpacity>
       </View>
     </View>
-    <TouchableOpacity onPress={() => removeItem(item.id)}>
-      <Text style={styles.removeButton}>Remove</Text>
-    </TouchableOpacity>
   </View>
 );
 
@@ -71,26 +75,26 @@ const Cart = () => {
     },
   ]);
 
-  const increaseQuantity = (id) => {
-    setCartItems((items) =>
-      items.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
+  const increaseQuantity = id => {
+    setCartItems(items =>
+      items.map(item =>
+        item.id === id ? {...item, quantity: item.quantity + 1} : item,
+      ),
     );
   };
 
-  const decreaseQuantity = (id) => {
-    setCartItems((items) =>
-      items.map((item) =>
+  const decreaseQuantity = id => {
+    setCartItems(items =>
+      items.map(item =>
         item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
+          ? {...item, quantity: item.quantity - 1}
+          : item,
+      ),
     );
   };
 
-  const removeItem = (id) => {
-    setCartItems((items) => items.filter((item) => item.id !== id));
+  const removeItem = id => {
+    setCartItems(items => items.filter(item => item.id !== id));
   };
 
   const calculateSubtotal = () =>
@@ -106,21 +110,24 @@ const Cart = () => {
         Your order is eligible for free Delivery
       </Text>
 
-      {cartItems.map((item) => (
-        <CartItem
-          key={item.id}
-          item={item}
-          increaseQuantity={increaseQuantity}
-          decreaseQuantity={decreaseQuantity}
-          removeItem={removeItem}
-        />
-      ))}
+      <View>
+        {cartItems.map(item => (
+          <CartItem
+            key={item.id}
+            item={item}
+            increaseQuantity={increaseQuantity}
+            decreaseQuantity={decreaseQuantity}
+            removeItem={removeItem}
+          />
+        ))}
+      </View>
 
       <TouchableOpacity
         style={styles.proceedButton}
-        onPress={() => navigation.navigate('Home', { screen: 'checkout' })}>
+        onPress={() => navigation.navigate('Home', {screen: 'checkout'})}>
         <Text style={styles.proceedText}>
-          PROCEED TO BUY ({cartItems.reduce((sum, item) => sum + item.quantity, 0)} ITEMS)
+          PROCEED TO BUY (
+          {cartItems.reduce((sum, item) => sum + item.quantity, 0)} ITEMS)
         </Text>
       </TouchableOpacity>
     </ScrollView>
@@ -156,13 +163,13 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderRadius: 10,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
   itemImage: {
     width: 80,
-    height: 80,
+    height: 100,
     borderRadius: 10,
   },
   itemDetails: {
@@ -173,6 +180,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Poppins-Bold',
     marginBottom: 5,
+    marginTop:15
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5, // Add space between price and reviews
   },
   itemPrice: {
     fontSize: 14,
@@ -187,7 +200,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'Poppins-Regular',
     color: 'rgba(4, 118, 78, 0.5)',
-    marginBottom: 10,
+    marginLeft: 5, // Space between price and reviews
+    marginBottom:5
   },
   quantityContainer: {
     flexDirection: 'row',
@@ -201,7 +215,6 @@ const styles = StyleSheet.create({
     height: 25,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
   },
   buttonText: {
     color: '#fff',
@@ -223,7 +236,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     paddingVertical: 15,
     alignItems: 'center',
-    marginTop: '40%',
+    marginTop: 100,
   },
   proceedText: {
     color: '#fff',
@@ -233,4 +246,3 @@ const styles = StyleSheet.create({
 });
 
 export default Cart;
-

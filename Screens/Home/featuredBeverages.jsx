@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: '100%',
-    marginTop: -60,
+    marginTop: -40,
   },
   featureContainer: {
     padding: 15,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 18,
-    fontFamily: 'Poppins-Bold', // Using Poppins-Bold
+    fontFamily: 'Poppins-Bold', 
     color: '#333',
   },
   moreText: {

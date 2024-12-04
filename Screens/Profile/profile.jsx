@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function Profile() {
@@ -33,30 +33,34 @@ export default function Profile() {
       </View>
 
       {/* Most Ordered Section */}
-      <Text style={styles.mostOrderedTitle}>Most Ordered</Text>
-      <View style={styles.mostOrderedContainer}>
-        {[
-          { name: 'Creamy Latte Coffee', image: require('../../assets/1.png') },
-          { name: 'Ombe Ice Coffee Latte', image: require('../../assets/2.png') },
-        ].map((item, index) => (
-          <View key={index} style={styles.orderCard}>
-            <Image source={item.image} style={styles.orderImage} />
-            <View style={styles.orderDetails}>
-              <Text style={styles.orderName}>{item.name}</Text>
-              <View style={styles.row}>
-                <Text style={styles.orderCategory}>Beverages</Text>
-                <TouchableOpacity>
-                  <Icon
-                    name="open-in-new"
-                    size={18}
-                    color="#fff"
-                    style={styles.icon}
-                  />
-                </TouchableOpacity>
+      <View>
+        <Text style={styles.mostOrderedTitle}>Most Ordered</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View style={styles.mostOrderedContainer}>
+            {[
+              { name: 'Creamy Latte Coffee', image: require('../../assets/1.png') },
+              { name: 'Ombe Ice Coffee Latte', image: require('../../assets/2.png') },
+            ].map((item, index) => (
+              <View key={index} style={styles.orderCard}>
+                <Image source={item.image} style={styles.orderImage} />
+                <View style={styles.orderDetails}>
+                  <Text style={styles.orderName}>{item.name}</Text>
+                  <View style={styles.row}>
+                    <Text style={styles.orderCategory}>Beverages</Text>
+                    <TouchableOpacity>
+                      <Icon
+                        name="open-in-new"
+                        size={18}
+                        color="#fff"
+                        style={styles.icon}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
               </View>
-            </View>
+            ))}
           </View>
-        ))}
+        </ScrollView>
       </View>
     </View>
   );
@@ -105,7 +109,7 @@ const styles = StyleSheet.create({
   },
   mostOrderedContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    paddingLeft: 10,  // Add some padding to the left
   },
   orderCard: {
     backgroundColor: '#04764e',
@@ -113,14 +117,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 1,
     marginRight: 10,
+    minWidth: 150, // Ensure each card has a minimum width
   },
   orderImage: {
     width: 60,
     height: 60,
-    borderRadius: 8,
-    marginRight: 10,
+    marginBottom: 10,
   },
   orderDetails: { flex: 1, justifyContent: 'center' },
   orderName: {
@@ -139,5 +142,5 @@ const styles = StyleSheet.create({
     color: '#d9f9e6',
     marginRight: 8,
   },
-  icon: { marginLeft: 5 },
+  icon: { marginLeft: 5, marginRight: 10 },
 });
