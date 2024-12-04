@@ -10,7 +10,6 @@ export default function App() {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    // Request notification permissions
     const requestPermissions = async () => {
       const authStatus = await messaging().requestPermission();
       const enabled =
@@ -23,13 +22,11 @@ export default function App() {
       }
     };
 
-    // Get the FCM token
     const getFCMToken = async () => {
       const token = await messaging().getToken();
       console.log('FCM Token:', token);
     };
 
-    // Handle background and foreground notifications
     const notificationListener = messaging().onMessage(async remoteMessage => {
       console.log('FCM Notification received in foreground:', remoteMessage);
     });
