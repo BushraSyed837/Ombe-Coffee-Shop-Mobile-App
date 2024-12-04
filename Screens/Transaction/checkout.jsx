@@ -6,12 +6,19 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const CheckoutScreen = () => {
   const navigation = useNavigation();
+  
+
+  const handleOrderSubmit = () => {
+    navigation.navigate('My Order');
+  };
+
   return (
     <ScrollView style={styles.container}>
       {/* Header */}
@@ -110,9 +117,7 @@ const CheckoutScreen = () => {
       {/* Submit Order Button */}
       <TouchableOpacity
         style={styles.submitButton}
-        onPress={() => {
-          navigation.navigate('My Order');
-        }}>
+        onPress={handleOrderSubmit}>
         <Text style={styles.submitButtonText}>SUBMIT ORDER</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -237,7 +242,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 30,
     alignItems: 'center',
-    margin:10
+    margin: 10,
   },
   submitButtonText: {
     fontSize: 16,

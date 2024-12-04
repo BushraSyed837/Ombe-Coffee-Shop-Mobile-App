@@ -1,90 +1,77 @@
-import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; // For back and search icons
+import React, { useState, useContext } from 'react';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, Modal } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { NotificationContext } from '../../App';
 
-const notifications = [
-  {
-    id: '1',
-    title: 'New Arrivals Alert!',
-    date: '15 July 2023',
-    image: 'https://randomuser.me/api/portraits/men/1.jpg',
-  },
-  {
-    id: '2',
-    title: 'Flash Sale Announcement',
-    date: '21 July 2023',
-    image: 'https://randomuser.me/api/portraits/men/2.jpg',
-  },
-  {
-    id: '3',
-    title: 'Exclusive Discounts Inside',
-    date: '10 March 2023',
-    image: 'https://randomuser.me/api/portraits/women/3.jpg',
-  },
-  {
-    id: '4',
-    title: 'Limited Stock - Act Fast!',
-    date: '20 September 2023',
-    image: 'https://randomuser.me/api/portraits/women/4.jpg',
-  },
-  {
-    id: '5',
-    title: 'Get Ready to Shop',
-    date: '15 July 2023',
-    image: 'https://randomuser.me/api/portraits/men/5.jpg',
-  },
-  {
-    id: '6',
-    title: "Don't Miss Out on Savings",
-    date: '24 July 2023',
-    image: 'https://randomuser.me/api/portraits/men/6.jpg',
-  },
-  {
-    id: '7',
-    title: 'Special Offer Just for You',
-    date: '28 August 2023',
-    image: 'https://randomuser.me/api/portraits/men/7.jpg',
-  },
-];
+const NotificationScreen = ({ navigation }) => {
+  const { notifications } = useContext(NotificationContext);
+  const [visibleModal, setVisibleModal] = useState(null);
+  const [modalContent, setModalContent] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalDate, setModalDate] = useState('');
 
-const NotificationScreen = ({navigation}) => {
-  const renderItem = ({item}) => (
+  const openModal = (item) => {
+    setModalTitle(item.title); // Set the modal title as item.title
+    setModalContent(item.text); // Set the modal content as item.text
+    setModalDate(item.date); // Set the modal date as item.date
+    setVisibleModal(true);
+  };
+
+  const closeModal = () => {
+    setVisibleModal(false);
+  };
+
+  const renderItem = ({ item }) => (
     <View style={styles.notificationItem}>
-      <Image source={{uri: item.image}} style={styles.avatar} />
+       <TouchableOpacity onPress={() => openModal(item)}>
       <View style={styles.notificationDetails}>
         <Text style={styles.notificationTitle}>{item.title}</Text>
         <Text style={styles.notificationDate}>{item.date}</Text>
       </View>
+      </TouchableOpacity>
     </View>
   );
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.headerText}>Notifications (12)</Text>
+        <Text style={styles.headerText}>Notifications ({notifications.length})</Text>
         <TouchableOpacity>
           <Icon name="search" size={24} color="#000" />
         </TouchableOpacity>
       </View>
-
-      {/* Notification List */}
       <FlatList
         data={notifications}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.listContent}
       />
+
+      <Modal 
+        visible={!!visibleModal}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={closeModal}>
+        <View style={[styles.modalOverlay, styles.modalCenter]}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>{modalTitle}</Text>
+              <TouchableOpacity onPress={closeModal}>
+                <Icon name="close" size={24} color="#000" />
+              </TouchableOpacity>
+            </View>
+            
+            <View style={styles.modalBody}>
+              <Text style={styles.modalDateCentered}>{modalDate}</Text>
+              <Text style={styles.modalText}>{modalContent}</Text>
+            </View>
+
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -120,12 +107,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
   },
-  avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 10,
-    marginRight: 12,
-  },
   notificationDetails: {
     flex: 1,
   },
@@ -138,6 +119,82 @@ const styles = StyleSheet.create({
   notificationDate: {
     fontSize: 14,
     color: '#888',
+  },
+
+  // Modal Styles
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    width: '85%',
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  modalTitle: {
+    fontSize: 18,
+    color: '#000',
+    fontFamily: 'Poppins-Bold',
+  },
+  modalBody: {
+    padding: 15,
+  },
+  modalFooter: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    padding: 16,
+    backgroundColor: '#FFFFFF',
+    borderTopColor: '#ddd',
+  },
+  closeButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    backgroundColor: '#fddbe3',
+    marginLeft: 10,
+  },
+  modalCenter: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  saveButton: {
+    backgroundColor: '#4caf50',
+  },
+  saveButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    textAlign: 'center',
+    fontFamily: 'Poppins-Bold',
+  },
+  closeButtonText: {
+    color: '#cc0d39',
+    fontSize: 14,
+    textAlign: 'center',
+    fontFamily: 'Poppins-Bold',
+  },
+  modalText: {
+    fontSize: 16,
+    fontFamily: 'Poppins-Regular',
+    textAlign: 'left',
+    color: '#000',
+  },
+  modalDateCentered: {
+    textAlign: 'center', 
+    fontSize: 12,
+    color: '#888',
+    marginBottom: 10, 
   },
 });
 
