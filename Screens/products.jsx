@@ -6,42 +6,38 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  Modal,
   Image,
 } from 'react-native';
 import {useWindowDimensions} from 'react-native';
-import {TabView, SceneMap} from 'react-native-tab-view';
+import {TabView} from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
-
-const products = [
-  {
-    id: 1,
-    name: 'Sweet Lemon Indonesian Tea',
-    category: 'Tea, Lemon',
-    price: '12.6',
-    rating: '3.8',
-    image: require('../assets/product1.jpg'),
-  },
-  {
-    id: 2,
-    name: 'Creamy Mocha Ome Coffee',
-    category: 'Coffee',
-    price: '12.6',
-    rating: '3.8',
-    image: require('../assets/product2.jpg'),
-  },
-  {
-    id: 3,
-    name: 'Arabica Latte Ombe Coffee',
-    category: 'Coffee',
-    price: '12.6',
-    rating: '3.8',
-    image: require('../assets/product3.jpg'),
-  },
-];
+import {useSelector, useDispatch} from 'react-redux';
+import {addToCart} from '../redux/slices/cartSlice';
 
 const TabContent = ({category}) => {
-  const filteredProducts = products;
+  const [visibleModal, setVisibleModal] = useState(null);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const products = useSelector(state => state.products.products);
+  const filteredProducts = products.filter(
+    product => product.category === category,
+  );
+
+  const handleShop = item => {
+    dispatch(addToCart(item));
+    openModal(item);
+  };
+
+  const openModal = () => {
+    setVisibleModal(true);
+  };
+
+  const closeModal = () => {
+    setVisibleModal(false);
+  };
+
   return (
     <FlatList
       data={filteredProducts}
@@ -59,7 +55,28 @@ const TabContent = ({category}) => {
             <Text style={styles.productCategory}>{item.category}</Text>
             <Text style={styles.productPrice}>${item.price}</Text>
           </View>
-          <TouchableOpacity style={styles.buyButton}>
+          <Modal
+            visible={!!visibleModal}
+            transparent={true}
+            animationType="slide"
+            onRequestClose={closeModal}>
+            <View style={[styles.modalOverlay, styles.modalCenter]}>
+              <View style={styles.modalContainer}>
+                <View style={styles.modalHeader}>
+                  <Text style={styles.modalTitle}>
+                    {'Item has been added to the cart'}
+                  </Text>
+                  <TouchableOpacity onPress={closeModal}>
+                    <Icon name="close" size={24} color="#000" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </Modal>
+          <TouchableOpacity
+            style={styles.buyButton}
+            onPress={() => handleShop(item)} // Pass item to the handler
+          >
             <Icon name="shopping-bag" size={18} color="#04764e" />
             <Text style={styles.buyButtonText}>Buy</Text>
           </TouchableOpacity>
@@ -69,16 +86,8 @@ const TabContent = ({category}) => {
   );
 };
 
-const renderScene = SceneMap({
-  beverages: () => <TabContent category="Beverages" />,
-  brewed: () => <TabContent category="Brewed Coffee" />,
-  blended: () => <TabContent category="Blended Coffee" />,
-});
-
-export default function ProductsScreen() {
-
+const ProductsScreen = () => {
   const navigation = useNavigation();
- 
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
   const routes = [
@@ -87,11 +96,29 @@ export default function ProductsScreen() {
     {key: 'blended', title: 'Blended Coffee'},
   ];
 
+  const renderScene = ({route}) => {
+    switch (route.key) {
+      case 'beverages':
+        return <TabContent category="Beverages" />;
+      case 'brewed':
+        return <TabContent category="Brewed Coffee" />;
+      case 'blended':
+        return <TabContent category="Blended Coffee" />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity>
-          <Icon name="arrow-back" size={24} color="#333" onPress={()=>{navigation.goBack()}}/>
+          <Icon
+            name="arrow-back"
+            size={24}
+            color="#333"
+            onPress={() => navigation.goBack()}
+          />
         </TouchableOpacity>
         <Text style={styles.title}>Products</Text>
         <TouchableOpacity>
@@ -143,7 +170,7 @@ export default function ProductsScreen() {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#fff'},
@@ -152,7 +179,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 16,
-    
   },
   title: {fontSize: 18, fontFamily: 'Poppins-Bold', color: '#333'},
   searchBarContainer: {
@@ -195,11 +221,11 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     paddingHorizontal: 5,
   },
-  ratingText: {fontSize: 10, color: '#fff', fontFamily: 'Poppins-Bold',},
+  ratingText: {fontSize: 10, color: '#fff', fontFamily: 'Poppins-Bold'},
   productDetails: {flex: 1, marginLeft: 10},
   productName: {fontSize: 14, fontFamily: 'Poppins-Bold', color: '#333'},
-  productCategory: {fontSize: 12, color: '#666', fontFamily: 'Poppins-Regular',},
-  productPrice: {fontSize: 14, color: '#04764e', fontFamily: 'Poppins-Bold',},
+  productCategory: {fontSize: 12, color: '#666', fontFamily: 'Poppins-Regular'},
+  productPrice: {fontSize: 14, color: '#04764e', fontFamily: 'Poppins-Bold'},
   buyButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -238,4 +264,54 @@ const styles = StyleSheet.create({
     color: '#04764e', // White text color for active tab
     fontFamily: 'Poppins-Bold',
   },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    width: '85%',
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  modalTitle: {
+    fontSize: 14,
+    color: '#000',
+    fontFamily: 'Poppins-Bold',
+  },
+  modalBody: {
+    padding: 15,
+  },
+  modalFooter: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    padding: 16,
+    backgroundColor: '#FFFFFF',
+    borderTopColor: '#ddd',
+  },
+  closeButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    backgroundColor: '#fddbe3',
+    marginLeft: 10,
+  },
+  modalCenter: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
+
+// Add your styles here
+export default ProductsScreen;

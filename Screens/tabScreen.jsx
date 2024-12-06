@@ -42,9 +42,9 @@ function ScreenWithDrawer() {
   };
 
   const handleMenuPress = menuName => {
-    setActiveMenu(menuName); // Update active menu state
-    navigation.navigate('Home', {screen: menuName}); // Navigate to the selected menu
-    handleDrawerClose(); // Close the drawer
+    setActiveMenu(menuName); 
+    navigation.navigate('Home', {screen: menuName}); 
+    handleDrawerClose(); 
   };
 
   const screenStyle = {

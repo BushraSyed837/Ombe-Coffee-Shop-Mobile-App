@@ -8,57 +8,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-
-const products = [
-  {
-    id: 1,
-    name: 'Hot Creamy Cappuccino Ombe',
-    price: '12.6',
-    oldPrice: '16.0',
-    points: '20',
-    rating: '3.8',
-    image: require('../../assets/product1.jpg'),
-  },
-  {
-    id: 2,
-    name: 'Creamy Mocha Ome Coffee',
-    price: '12.6',
-    oldPrice: '16.0',
-    points: '50',
-    rating: '3.8',
-    image: require('../../assets/product2.jpg'),
-  },
-  {
-    id: 3,
-    name: 'Arabica Latte Ombe Coffee',
-    price: '12.6',
-    oldPrice: '16.0',
-    points: '10',
-    rating: '3.8',
-    image: require('../../assets/product3.jpg'),
-  },
-  {
-    id: 4,
-    name: 'Espresso',
-    price: '5.8',
-    oldPrice: '9.9',
-    points: '30',
-    rating: '4.0',
-    image: require('../../assets/product4.jpg'),
-  },
-  {
-    id: 5,
-    name: 'Cappuccino',
-    price: '5.8',
-    oldPrice: '9.9',
-    points: '90',
-    rating: '4.5',
-    image: require('../../assets/product2.jpg'),
-  },
-];
+import {useSelector} from 'react-redux';
+import {selectProducts} from '../../redux/slices/productSlice'; // Import the selector
 
 const FeaturedBeverages = ({more}) => {
   const navigation = useNavigation();
+
+  // Use the useSelector hook to retrieve products from the Redux store
+  const products = useSelector(state => state.products.products);
 
   const renderProduct = ({item}) => (
     <View style={styles.beverageItem}>
@@ -73,14 +30,18 @@ const FeaturedBeverages = ({more}) => {
 
       {/* Name, Price, and Points */}
       <View style={styles.featureDetails}>
-        <TouchableOpacity onPress={()=>{navigation.navigate('details')}}>
-        <Text style={styles.featureName} numberOfLines={1}>
-          {item.name}
-        </Text>         
+        <TouchableOpacity
+          onPress={() => {
+            console.log(item)
+            navigation.navigate('details', {selectedProduct: item}); 
+          }}>
+          <Text style={styles.featureName} numberOfLines={1}>
+            {item.name}
+          </Text>
         </TouchableOpacity>
         <View style={styles.priceAndPoints}>
           <Text style={styles.featurePrice}>${item.price}</Text>
-          <Text style={styles.featurePoints}>{item.points} Pts</Text>
+          <Text style={styles.featurePoints}>{item.points}</Text>
         </View>
       </View>
     </View>
@@ -93,7 +54,7 @@ const FeaturedBeverages = ({more}) => {
           <Text style={styles.header}>Featured Beverages</Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('Products')
+              navigation.navigate('Products');
             }}>
             <Text style={styles.moreText}>More</Text>
           </TouchableOpacity>
@@ -126,11 +87,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 5,
-    marginTop:5
+    marginTop: 5,
   },
   header: {
     fontSize: 18,
-    fontFamily: 'Poppins-Bold', 
+    fontFamily: 'Poppins-Bold',
     color: '#333',
   },
   moreText: {

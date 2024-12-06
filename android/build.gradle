@@ -8,8 +8,13 @@ buildscript {
         kotlinVersion = "1.9.0"
     }
     repositories {
-        google()
+        maven { url 'https://maven.google.com' }
+        mavenLocal()
         mavenCentral()
+        maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url "$rootDir/../node_modules/react-native/android"
+        }
     }
     dependencies {
         classpath("com.android.tools.build:gradle")
@@ -18,5 +23,19 @@ buildscript {
         classpath("com.google.gms:google-services:4.4.2")
     }
 }
+allprojects {
+    configurations.all {
+          resolutionStrategy {
+            //force "com.facebook.react:react-native:" + REACT_NATIVE_VERSION
+            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0'
+          }
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    // ...  
+}
+
 
 apply plugin: "com.facebook.react.rootproject"

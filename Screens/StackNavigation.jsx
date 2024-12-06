@@ -97,7 +97,7 @@ const HeaderRightIcons = ({handleDrawerOpen, navigation}) => (
 const screens = [
   {name: 'Home', component: HomeMain},
   {name: 'Products', component: ProductsScreen},
-  {name: 'Cart', component: Cart},
+  {name: 'cart', component: Cart},
   {name: 'favourite', component: WishlistScreen},
   {name: 'details', component: DetailsScreen},
   {name: 'My Order', component: MyOrders},
@@ -226,7 +226,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: '#000',
     fontFamily: 'Poppins-SemiBold',
-   
   },
   headerRight: {
     flexDirection: 'row',

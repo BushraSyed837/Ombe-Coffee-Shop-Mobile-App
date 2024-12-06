@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "311584510720",
+    "project_id": "zimo-8b9f6",
+    "storage_bucket": "zimo-8b9f6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311584510720:android:63e377f01527fa442719e5",
+        "android_client_info": {
+          "package_name": "com.ombe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3IgF6u1e6-lDwXFiQJZ8fmd9-sFKhQxA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,56 +1,18 @@
-import React, { useRef, useEffect } from 'react';
+import React, {useRef, useEffect} from 'react';
 import {
   View,
   StyleSheet,
   Text,
-  Dimensions,
   Image,
   Animated,
   FlatList,
   TouchableOpacity,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux'; // Import useSelector
+
 // Wrap FlatList with Animated.createAnimatedComponent
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
-const products = [
-  {
-    id: 1,
-    name: 'Creamy coffee',
-    price: '12.6',
-    oldPrice: '16.0',
-    points: '50 Pts',
-    rating: '3.8',
-    image: require('../../assets/1.png'),
-  },
-  {
-    id: 2,
-    name: 'Creamy Mocha',
-    price: '12.6',
-    oldPrice: '16.0',
-    points: '50 Pts',
-    rating: '3.8',
-    image: require('../../assets/2.png'),
-  },
-  {
-    id: 3,
-    name: 'Cappuccino',
-    price: '12.6',
-    oldPrice: '16.0',
-    points: '50 Pts',
-    rating: '3.8',
-    image: require('../../assets/1.png'),
-  },
-  {
-    id: 4,
-    name: 'Cold Coffee',
-    price: '12.6',
-    oldPrice: '16.0',
-    points: '50 Pts',
-    rating: '3.8',
-    image: require('../../assets/2.png'),
-  },
-];
 
 const Carousel = () => {
   const ITEM_WIDTH = 180; // Slightly smaller item width for better fit
@@ -58,23 +20,26 @@ const Carousel = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
   const flatListRef = useRef(null);
   const navigation = useNavigation();
- 
+
+  // Use useSelector to get products from Redux store
+  const products = useSelector(state => state.products.products); // Get products from Redux
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (flatListRef.current) {
         flatListRef.current.scrollToOffset({
-          offset: (scrollX._value + ITEM_WIDTH) % (ITEM_WIDTH * products.length),
+          offset:
+            (scrollX._value + ITEM_WIDTH) % (ITEM_WIDTH * products.length),
           animated: true,
         });
       }
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [scrollX]);
+  }, [scrollX, products.length]); // Dependency on products.length for proper update
 
-  const renderProduct = ({ item, index }) => {
-    if (!item.name) return <View style={{ width: SPACER_ITEM_WIDTH }} />;
+  const renderProduct = ({item, index}) => {
+    if (!item.name) return <View style={{width: SPACER_ITEM_WIDTH}} />;
 
     const inputRange = [
       (index - 1) * ITEM_WIDTH,
@@ -98,19 +63,20 @@ const Carousel = () => {
       <TouchableOpacity
         accessible={true}
         accessibilityLabel={`Product ${item.name}`}
-        onPress={()=>{
-          navigation.navigate('details')
+        onPress={() => {
+          console.log(item)
+          navigation.navigate('details', {selectedProduct: item}); // Pass the selected product
         }}
         accessibilityHint="Double-tap to view product details">
         <Animated.View
           style={[
             styles.card,
-            { transform: [{ scale }, { translateY }], width: ITEM_WIDTH },
+            {transform: [{scale}, {translateY}], width: ITEM_WIDTH},
           ]}>
           <Image source={item.image} style={styles.productImage} />
           <Text style={styles.productName}>{item.name}</Text>
           <View style={styles.priceContainer}>
-            <Text style={{color:'#FFFFFF', marginRight: 5}}>$</Text>
+            <Text style={{color: '#FFFFFF', marginRight: 5}}>$</Text>
             <Text style={styles.currentPrice}>{item.price}</Text>
             <Text style={styles.oldPrice}>${item.oldPrice}</Text>
           </View>
@@ -125,17 +91,17 @@ const Carousel = () => {
       <View style={styles.carouselContainer}>
         <AnimatedFlatList
           ref={flatListRef}
-          data={[{ key: 'left-spacer' }, ...products, { key: 'right-spacer' }]}
+          data={[{key: 'left-spacer'}, ...products, {key: 'right-spacer'}]}
           keyExtractor={(item, index) => `${item.id || index}`}
           horizontal
           showsHorizontalScrollIndicator={false}
           snapToInterval={ITEM_WIDTH}
           decelerationRate="fast"
-          contentContainerStyle={{ alignItems: 'center', paddingTop: 10 }}
+          contentContainerStyle={{alignItems: 'center', paddingTop: 10}}
           renderItem={renderProduct}
           onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-            { useNativeDriver: true }
+            [{nativeEvent: {contentOffset: {x: scrollX}}}],
+            {useNativeDriver: true},
           )}
           scrollEventThrottle={16}
         />
@@ -150,13 +116,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    paddingTop:20,
-    paddingBottom: 0, 
-    marginBottom: -60, 
+    paddingTop: 20,
+    paddingBottom: 0,
+    marginBottom: -60,
   },
   carouselContainer: {
     width: '100%',
-    height:'90%',
+    height: '90%',
   },
   card: {
     backgroundColor: '#04764e',
@@ -166,17 +132,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginHorizontal: 5,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.3,
     shadowRadius: 5,
-    height:'90%',
+    height: '90%',
     elevation: 5,
   },
   productImage: {
-    width: 150,  // Increased image size
+    width: 150, // Increased image size
     height: 150, // Increased image size
     resizeMode: 'contain',
-    marginBottom:3
+    marginBottom: 3,
   },
   productName: {
     fontSize: 14,
@@ -189,7 +155,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: '80%',
-    marginBottom:50
+    marginBottom: 50,
   },
   currentPrice: {
     fontSize: 23,
@@ -199,24 +165,8 @@ const styles = StyleSheet.create({
   oldPrice: {
     fontSize: 12,
     color: '#ccc',
-    marginLeft:15,
+    marginLeft: 15,
     textDecorationLine: 'line-through',
-  },
-  pointsContainer: {
-    marginTop: 5,
-  },
-  points: {
-    fontSize: 14,
-    color: '#FFD700',
-    fontFamily: 'Poppins-Bold', // Using Poppins-Bold
-  },
-  ratingContainer: {
-    marginTop: 5,
-  },
-  rating: {
-    fontSize: 14,
-    color: '#FFD700',
-    fontFamily: 'Poppins-Regular', // Using Poppins-Bold
   },
 });
 

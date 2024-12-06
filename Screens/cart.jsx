@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -8,8 +8,14 @@ import {
   ScrollView,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  removeFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+} from '../redux/slices/cartSlice';
 
-const CartItem = ({item, increaseQuantity, decreaseQuantity, removeItem}) => (
+const CartItem = ({item}) => (
   <View style={styles.itemContainer}>
     <Image source={item.image} style={styles.itemImage} />
     <View style={styles.itemDetails}>
@@ -22,19 +28,19 @@ const CartItem = ({item, increaseQuantity, decreaseQuantity, removeItem}) => (
         <Text style={styles.itemReviews}>⭐ {item.reviews}</Text>
         <TouchableOpacity
           style={{marginLeft: 35}}
-          onPress={() => removeItem(item.id)}>
+          onPress={() => item.removeItem(item.id)}>
           <Text style={styles.removeButton}>Remove</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.quantityContainer}>
         <TouchableOpacity
-          onPress={() => decreaseQuantity(item.id)}
+          onPress={() => item.decreaseQuantity(item.id)}
           style={styles.button}>
           <Text style={styles.buttonText}>-</Text>
         </TouchableOpacity>
         <Text style={styles.quantity}>{item.quantity}</Text>
         <TouchableOpacity
-          onPress={() => increaseQuantity(item.id)}
+          onPress={() => item.increaseQuantity(item.id)}
           style={styles.button}>
           <Text style={styles.buttonText}>+</Text>
         </TouchableOpacity>
@@ -45,66 +51,20 @@ const CartItem = ({item, increaseQuantity, decreaseQuantity, removeItem}) => (
 
 const Cart = () => {
   const navigation = useNavigation();
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: 'Hot Creamy Cappuccino Latte Ombe',
-      price: 8.9,
-      originalPrice: 9.5,
-      reviews: '2k Review',
-      image: require('../assets/product1.jpg'),
-      quantity: 1,
-    },
-    {
-      id: 2,
-      name: 'Creamy Mocha Ome Coffee',
-      price: 6.3,
-      originalPrice: 8.5,
-      reviews: '2k Review',
-      image: require('../assets/product2.jpg'),
-      quantity: 1,
-    },
-    {
-      id: 3,
-      name: 'Ice Chocolate Coffee',
-      price: 6.2,
-      originalPrice: 9.5,
-      reviews: '2k Review',
-      image: require('../assets/product3.jpg'),
-      quantity: 1,
-    },
-  ]);
+  const dispatch = useDispatch();
 
-  const increaseQuantity = id => {
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id ? {...item, quantity: item.quantity + 1} : item,
-      ),
-    );
-  };
-
-  const decreaseQuantity = id => {
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id && item.quantity > 1
-          ? {...item, quantity: item.quantity - 1}
-          : item,
-      ),
-    );
-  };
-
-  const removeItem = id => {
-    setCartItems(items => items.filter(item => item.id !== id));
-  };
-
-  const calculateSubtotal = () =>
-    cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const cartItems = useSelector(state => state.cart.cart);
 
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.subtotal}>
         Subtotal:{' '}
-        <Text style={styles.bold}>${calculateSubtotal().toFixed(2)}</Text>
+        <Text style={styles.bold}>
+          $
+          {cartItems
+            .reduce((total, item) => total + item.price * item.quantity, 0)
+            .toFixed(2)}
+        </Text>
       </Text>
       <Text style={styles.freeDelivery}>
         Your order is eligible for free Delivery
@@ -114,10 +74,12 @@ const Cart = () => {
         {cartItems.map(item => (
           <CartItem
             key={item.id}
-            item={item}
-            increaseQuantity={increaseQuantity}
-            decreaseQuantity={decreaseQuantity}
-            removeItem={removeItem}
+            item={{
+              ...item,
+              increaseQuantity: id => dispatch(increaseQuantity({id})),
+              decreaseQuantity: id => dispatch(decreaseQuantity({id})),
+              removeItem: id => dispatch(removeFromCart({id})),
+            }}
           />
         ))}
       </View>
@@ -180,12 +142,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Poppins-Bold',
     marginBottom: 5,
-    marginTop:15
+    marginTop: 15,
   },
   priceContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 5, // Add space between price and reviews
+    marginBottom: 5,
   },
   itemPrice: {
     fontSize: 14,
@@ -200,8 +162,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'Poppins-Regular',
     color: 'rgba(4, 118, 78, 0.5)',
-    marginLeft: 5, // Space between price and reviews
-    marginBottom:5
+    marginLeft: 5,
   },
   quantityContainer: {
     flexDirection: 'row',

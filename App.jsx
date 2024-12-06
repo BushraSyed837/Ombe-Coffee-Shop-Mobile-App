@@ -1,13 +1,41 @@
 import React, { useState, useEffect, createContext } from 'react';
+import { NativeModules, Platform, BackHandler, ToastAndroid } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import messaging from '@react-native-firebase/messaging';
 import TabScreen from './Screens/tabScreen';
+import { Provider } from 'react-redux';
+import store from './redux/store'; // Path to your store.js
 
 export const NotificationContext = createContext();
 
-export default function App() {
+const { PipMode } = NativeModules;
 
+const enablePipMode = () => {
+  if (Platform.OS === 'android' && PipMode) {
+    PipMode.enterPipMode();
+  } else {
+    console.log('PipMode is not available!');
+  }
+};
+
+export default function App() {
   const [notifications, setNotifications] = useState([]);
+
+  // Handle Android Back Button
+  useEffect(() => {
+    const handleBackPress = () => {
+      if (Platform.OS === 'android' && PipMode) {
+        enablePipMode(); // Trigger PiP mode when back button is pressed
+        ToastAndroid.show('Entering PiP Mode', ToastAndroid.SHORT);
+        return true; // Prevent default back button behavior
+      }
+      return false; // Allow default behavior for other platforms
+    };
+
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+
+    return () => BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+  }, []);
 
   useEffect(() => {
     const requestPermissions = async () => {
@@ -51,7 +79,10 @@ export default function App() {
     };
 
     const listenForMessages = messaging().onMessage(async remoteMessage => {
-      const messageData = remoteMessage.notification?.body || remoteMessage.data?.message || 'No message content';
+      const messageData =
+        remoteMessage.notification?.body ||
+        remoteMessage.data?.message ||
+        'No message content';
 
       setNotifications(prev => [
         ...prev,
@@ -59,7 +90,7 @@ export default function App() {
           id: remoteMessage.messageId,
           title: remoteMessage.notification?.title,
           date: new Date().toLocaleString(),
-          text: messageData,  // Use notification body or data message
+          text: messageData, // Use notification body or data message
           image: remoteMessage.notification?.android?.imageUrl || null,
         },
       ]);
@@ -71,10 +102,12 @@ export default function App() {
   }, []);
 
   return (
-    <NotificationContext.Provider value={{ notifications, setNotifications }}>
-      <NavigationContainer>
-        <TabScreen />
-      </NavigationContainer>
-    </NotificationContext.Provider>
+    <Provider store={store}>
+      <NotificationContext.Provider value={{ notifications, setNotifications }}>
+        <NavigationContainer>
+          <TabScreen />
+        </NavigationContainer>
+      </NotificationContext.Provider>
+    </Provider>
   );
 }
