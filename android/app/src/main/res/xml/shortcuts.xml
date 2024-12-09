@@ -1,0 +1,28 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="home"
+        android:enabled="true"
+        android:icon="@drawable/ic_s1"
+        android:shortcutShortLabel="@string/shortcut_home_short_label"
+        android:shortcutLongLabel="@string/shortcut_home_long_label"
+        android:shortcutDisabledMessage="@string/shortcut_home_disabled_message">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.ombe.MainActivity"
+            android:data="app://homeView"
+            android:targetPackage="com.ombe" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="cart"
+        android:enabled="true"
+        android:icon="@drawable/ic_s2"
+        android:shortcutShortLabel="@string/shortcut_cart_short_label"
+        android:shortcutLongLabel="@string/shortcut_cart_long_label"
+        android:shortcutDisabledMessage="@string/shortcut_cart_disabled_message">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.ombe.MainActivity"
+            android:targetPackage="com.ombe" />
+    </shortcut>
+</shortcuts>
