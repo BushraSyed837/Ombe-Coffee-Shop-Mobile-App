@@ -27,6 +27,8 @@ class MainApplication : Application(), ReactApplication {
                 val packages = PackageList(this).packages.toMutableList()
                 // Add PipModulePackage manually
                 packages.add(PipModulePackage())
+                packages.add(CustomPackages())
+
                 return packages
             }
 
@@ -67,7 +69,7 @@ class MainApplication : Application(), ReactApplication {
                 ShortcutInfo.Builder(this, "home")
                     .setShortLabel("Home")
                     .setLongLabel("View Home")
-                    .setIcon(Icon.createWithResource(this, R.drawable.ic_s1)) // Make sure ic_compose exists
+                    .setIcon(Icon.createWithResource(this, R.drawable.ic_home)) // Make sure ic_compose exists
                     .setIntent(
                         Intent(this, MainActivity::class.java).apply {
                             action = Intent.ACTION_VIEW
@@ -79,7 +81,7 @@ class MainApplication : Application(), ReactApplication {
                 ShortcutInfo.Builder(this, "cart")
                     .setShortLabel("Cart")
                     .setLongLabel("View Cart")
-                    .setIcon(Icon.createWithResource(this, R.drawable.ic_s2)) // Make sure ic_profile exists
+                    .setIcon(Icon.createWithResource(this, R.drawable.ic_cart)) // Make sure ic_profile exists
                     .setIntent(
                         Intent(this, MainActivity::class.java).apply {
                             action = Intent.ACTION_VIEW

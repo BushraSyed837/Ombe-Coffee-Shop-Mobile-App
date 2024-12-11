@@ -1,10 +1,8 @@
 <resources>
     <string name="app_name">ombe</string>
     <string name="shortcut_home_short_label">Home</string>
-    <string name="shortcut_home_long_label">View Home</string>
-    <string name="shortcut_home_disabled_message">Shortcut unavailable</string>
+<string name="shortcut_home_long_label">View Home Screen</string>
+<string name="shortcut_cart_short_label">Cart</string>
+<string name="shortcut_cart_long_label">View Cart Screen</string>
 
-    <string name="shortcut_cart_short_label">Cart</string>
-    <string name="shortcut_cart_long_label">View Cart</string>
-    <string name="shortcut_cart_disabled_message">Shortcut unavailable</string>
 </resources>

@@ -24,6 +24,7 @@ const componentsData = [
       {name: 'Cards', icon: 'bold', screen: 'Cards'},
       {name: 'Inputs', icon: 'bold', screen: 'Inputs'},
       {name: 'Dropdowns', icon: 'bold', screen: 'Dropdowns'},
+      {name: 'Dynamic Icon', icon: 'bold', screen: 'DynamicIcons'},
       {name: 'Collapse', icon: 'bold', screen: 'Collapse'},
       {name: 'Radio Button', icon: 'bold', screen: 'RadioButton'},
       {name: 'Timeline', icon: 'bold', screen: 'Timeline'},
@@ -43,6 +44,7 @@ const componentsData = [
       {name: 'Toasts', icon: 'bold', screen: 'Toasts'},
       {name: 'Typography', icon: 'bold', screen: 'Typography'},
       {name: 'Lightgallery', icon: 'bold', screen: 'Lightgallery'},
+      {name: 'DynamicIcon', icon: 'bold', screen: 'DynamicIcons'},
     ],
   },
 ];

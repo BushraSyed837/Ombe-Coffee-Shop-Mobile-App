@@ -2,27 +2,28 @@
     <shortcut
         android:shortcutId="home"
         android:enabled="true"
-        android:icon="@drawable/ic_s1"
+        android:icon="@drawable/ic_home"
         android:shortcutShortLabel="@string/shortcut_home_short_label"
-        android:shortcutLongLabel="@string/shortcut_home_long_label"
-        android:shortcutDisabledMessage="@string/shortcut_home_disabled_message">
+        android:shortcutLongLabel="@string/shortcut_home_long_label">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="com.ombe.MainActivity"
-            android:data="app://homeView"
-            android:targetPackage="com.ombe" />
+            android:targetPackage="com.ombe"
+            android:targetClass="com.ombe.MainActivity">
+            <extra android:name="shortcut_type" android:value="home" />
+        </intent>
     </shortcut>
 
     <shortcut
         android:shortcutId="cart"
         android:enabled="true"
-        android:icon="@drawable/ic_s2"
+        android:icon="@drawable/ic_cart"
         android:shortcutShortLabel="@string/shortcut_cart_short_label"
-        android:shortcutLongLabel="@string/shortcut_cart_long_label"
-        android:shortcutDisabledMessage="@string/shortcut_cart_disabled_message">
-        <intent
+        android:shortcutLongLabel="@string/shortcut_cart_long_label">
+       <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="com.ombe.MainActivity"
-            android:targetPackage="com.ombe" />
+            android:targetPackage="com.ombe"
+            android:targetClass="com.ombe.MainActivity">
+            <extra android:name="shortcut_type" android:value="cart" />
+        </intent>
     </shortcut>
 </shortcuts>

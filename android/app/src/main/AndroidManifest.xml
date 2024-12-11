@@ -1,6 +1,5 @@
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ombe">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -31,5 +30,84 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+
+      <activity-alias
+        android:label="icon1"
+        android:icon="@mipmap/ic_icon1"
+        android:name="First"
+        android:enabled="false"
+        android:exported="true"
+        android:targetActivity=".MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity-alias>
+
+      <activity-alias
+        android:label="icon2"
+        android:icon="@mipmap/ic_icon2"
+        android:name="Second"
+        android:exported="true"
+        android:enabled="false"
+        android:targetActivity=".MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity-alias>
+
+      <activity-alias
+        android:label="icon3"
+        android:icon="@mipmap/ic_icon3"
+        android:name="Third"
+        android:exported="true"
+        android:enabled="false"
+        android:targetActivity=".MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity-alias>
+      
+      <activity-alias
+        android:label="icon4"
+        android:icon="@mipmap/ic_icon4"
+        android:name="Fourth"
+        android:exported="true"
+        android:enabled="false"
+        android:targetActivity=".MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity-alias>
+
+      <activity-alias
+        android:label="icon5"
+        android:icon="@mipmap/ic_icon5"
+        android:name="Fifth"
+        android:exported="true"
+        android:enabled="false"
+        android:targetActivity=".MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity-alias>
+
+      <activity-alias
+        android:label="icon6"
+        android:icon="@mipmap/ic_icon6"
+        android:name="Sixth"
+        android:exported="true"
+        android:enabled="false"
+        android:targetActivity=".MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity-alias>
+
     </application>
 </manifest>

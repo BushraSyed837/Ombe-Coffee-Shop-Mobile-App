@@ -64,6 +64,7 @@ import NotificationScreen from './Pages/notification';
 import ErrorScreen from './Pages/error404';
 import FAQScreen from './Pages/faq';
 import Onboarding from './Pages/onboarding';
+import DynamicIcons from './Components/dynamicIcon';
 import {useNavigation} from '@react-navigation/native';
 
 const Stack = createStackNavigator();
@@ -121,6 +122,7 @@ const screens = [
   {name: 'error', component: ErrorScreen},
   {name: 'faq', component: FAQScreen},
   {name: 'onboarding', component: Onboarding},
+  {name: 'Dynamic Icon', component: DynamicIcons},
   // {name: 'logout', component: Logout},
 
   {name: 'Chat List', component: MessageList},

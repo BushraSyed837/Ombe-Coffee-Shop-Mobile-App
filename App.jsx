@@ -41,37 +41,40 @@ export default function App() {
 
   // Handle incoming deep links (including shortcuts)
   useEffect(() => {
-    console.log("Deep link URL:");
     const handleDeepLink = (event) => {
       const { url } = event;
       console.log("Deep link URL:", url);
-
-      // Example of handling shortcut types from deep link
-      if (url.includes("shortcut_type=home")) {
-        console.log("Navigate to Home");
-        
-        // Navigate to the Home screen or perform any action
-      } else if (url.includes("shortcut_type=cart")) {
-        console.log("Navigate to Cart");
-        // Navigate to the Cart screen or perform any action
+      
+      if (url) {
+        // Check for the shortcut type in the URL
+        if (url.includes("shortcut_type=home")) {
+          console.log("Navigate to Home");
+          // Add logic to navigate to the Home screen
+        } else if (url.includes("shortcut_type=cart")) {
+          console.log("Navigate to Cart");
+          // Add logic to navigate to the Cart screen
+        } else {
+          console.log("Unknown deep link type.");
+        }
       }
     };
-
-    // Add event listener for deep links
-    Linking.addEventListener('url', handleDeepLink);
-
-    // Handle initial deep link if app was opened via one
+  
+    // Add event listener for deep link URL events
+    const deepLinkListener = Linking.addEventListener('url', handleDeepLink);
+  
+    // Check if the app was opened via a deep link
     Linking.getInitialURL().then((url) => {
       if (url) {
-        handleDeepLink({ url });
+        handleDeepLink({ url });  // Handle the deep link if the app was opened via one
       }
     });
-
-    // Clean up listener when the component unmounts
+  
+    // Clean up the event listener on component unmount
     return () => {
-      Linking.removeEventListener('url', handleDeepLink);
+      deepLinkListener.remove();
     };
   }, []);
+  
 
   // Request permission and handle messaging logic
   useEffect(() => {
