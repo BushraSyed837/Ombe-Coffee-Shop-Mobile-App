@@ -10,6 +10,7 @@ import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 import androidx.annotation.RequiresApi
 import android.util.Log
+import com.facebook.react.modules.core.DeviceEventManagerModule
 
 class MainActivity : ReactActivity() {
 
@@ -30,6 +31,21 @@ class MainActivity : ReactActivity() {
             Log.d("MainActivity", "Received shortcut: $shortcutType")
             intent.putExtra("initialRoute", shortcutType) // Add the route to navigate to
             setIntent(intent) // Set the new intent so React Native can access it
+
+            // Emit the event to JavaScript when the shortcut is triggered
+            emitShortcutActionEvent(shortcutType)
+        }
+    }
+
+    // Emit event to JS side when a shortcut is activated
+    private fun emitShortcutActionEvent(shortcutType: String) {
+        val reactContext = reactInstanceManager.currentReactContext
+        if (reactContext != null) {
+            reactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+                .emit("ShortcutAction", shortcutType)
+        } else {
+            Log.e("MainActivity", "React context is null!")
         }
     }
 

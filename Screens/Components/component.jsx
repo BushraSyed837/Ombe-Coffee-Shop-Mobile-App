@@ -30,7 +30,7 @@ const componentsData = [
       {name: 'Timeline', icon: 'bold', screen: 'Timeline'},
       {name: 'Social', icon: 'bold', screen: 'Social'},
       {name: 'List Group', icon: 'bold', screen: 'ListGroup'},
-      {name: 'Modal', icon: 'bold', screen: 'Modal'},
+      {name: 'Modal', icon: 'bold', screen: 'Modal'}, 
       {name: 'Tabs', icon: 'bold', screen: 'Tabs'},
       {name: 'Switch', icon: 'bold', screen: 'Switch'},
       {name: 'Divider', icon: 'bold', screen: 'Divider'},

@@ -116,6 +116,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation("com.facebook.react:react-android")
     implementation "com.facebook.react:react-native:+"
+    
 
 
     if (hermesEnabled.toBoolean()) {

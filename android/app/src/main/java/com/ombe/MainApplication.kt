@@ -1,13 +1,10 @@
 package com.ombe
 
 import android.app.Application
-import android.content.Intent // Added import for Intent
+import android.content.Intent
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
-import android.os.Build
-import androidx.annotation.RequiresApi
-
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
 import com.facebook.react.ReactHost
@@ -18,6 +15,7 @@ import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.react.soloader.OpenSourceMergedSoMapping
 import com.facebook.soloader.SoLoader
+import com.facebook.react.modules.core.DeviceEventManagerModule
 
 class MainApplication : Application(), ReactApplication {
 
@@ -25,9 +23,9 @@ class MainApplication : Application(), ReactApplication {
         object : DefaultReactNativeHost(this) {
             override fun getPackages(): List<ReactPackage> {
                 val packages = PackageList(this).packages.toMutableList()
-                // Add PipModulePackage manually
-                packages.add(PipModulePackage())
-                packages.add(CustomPackages())
+                // Add custom packages manually
+                packages.add(PipModulePackage()) 
+                packages.add(CustomPackages()) 
 
                 return packages
             }
@@ -46,30 +44,38 @@ class MainApplication : Application(), ReactApplication {
     override fun onCreate() {
         super.onCreate()
 
+        // Initialize SoLoader for React Native
         SoLoader.init(this, OpenSourceMergedSoMapping)
 
         if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
             load()
         }
-
-        setupAppShortcuts()
     }
 
+    /**
+     * Configures app shortcuts for the launcher.
+     */
     private fun setupAppShortcuts() {
         val shortcutManager = getSystemService(ShortcutManager::class.java)
 
-        if (shortcutManager != null && shortcutManager.isRequestPinShortcutSupported) {
+        if (shortcutManager != null) {
+            // Remove any existing dynamic shortcuts
             shortcutManager.removeAllDynamicShortcuts()
 
-        // If pinned shortcuts exist, disable them
-        shortcutManager.pinnedShortcuts.forEach { shortcut ->
-            shortcutManager.disableShortcuts(listOf(shortcut.id), "Shortcut disabled by app.")
-        }
+            // Handle pinned shortcuts
+            shortcutManager.pinnedShortcuts.forEach { shortcut ->
+                shortcutManager.disableShortcuts(
+                    listOf(shortcut.id),
+                    "Shortcut disabled by app."
+                )
+            }
+
+            // Define the shortcuts
             val shortcuts = listOf(
                 ShortcutInfo.Builder(this, "home")
                     .setShortLabel("Home")
                     .setLongLabel("View Home")
-                    .setIcon(Icon.createWithResource(this, R.drawable.ic_home)) // Make sure ic_compose exists
+                    .setIcon(Icon.createWithResource(this, R.drawable.ic_home))
                     .setIntent(
                         Intent(this, MainActivity::class.java).apply {
                             action = Intent.ACTION_VIEW
@@ -81,7 +87,7 @@ class MainApplication : Application(), ReactApplication {
                 ShortcutInfo.Builder(this, "cart")
                     .setShortLabel("Cart")
                     .setLongLabel("View Cart")
-                    .setIcon(Icon.createWithResource(this, R.drawable.ic_cart)) // Make sure ic_profile exists
+                    .setIcon(Icon.createWithResource(this, R.drawable.ic_cart))
                     .setIntent(
                         Intent(this, MainActivity::class.java).apply {
                             action = Intent.ACTION_VIEW
@@ -91,7 +97,19 @@ class MainApplication : Application(), ReactApplication {
                     .build()
             )
 
+            // Set the shortcuts dynamically
             shortcutManager.dynamicShortcuts = shortcuts
+        }
+    }
+
+    /**
+     * Emit event to JS side when a shortcut is activated.
+     */
+    private fun emitShortcutActionEvent(shortcutType: String) {
+        val reactContext = reactNativeHost.reactInstanceManager.currentReactContext
+        reactContext?.let {
+            it.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+                .emit("ShortcutAction", shortcutType)
         }
     }
 }
